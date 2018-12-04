@@ -1,3 +1,4 @@
+function [Cu,Ru] = Cu_Ru_calculation()
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % 2018/12/3
 % Purpose:  This file is to calculate needed Cu and Ru for DAC
@@ -110,4 +111,7 @@ Max_DNL_INL = 2/2^(N_DAC)
 
 
 
+
+
+end
 
