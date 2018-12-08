@@ -86,7 +86,7 @@ Area_C = (Cap_num .* WL_C);
 
 Ctotal = Cu .* Cap_num;
 
-Rin = 1e-3./(fconv*Ctotal);
+Rin = 2e-3./(fconv*Ctotal);
 
 figure(1)
 subplot(4,1,[1,2]);
