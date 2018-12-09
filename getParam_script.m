@@ -10,7 +10,7 @@
 clear;
 Vref = 1;
 
-N_CDAC = 1:12; %C-DAC resolution
+N_CDAC = 6; %C-DAC resolution
 N_DAC = 12;
 N_RDAC = N_DAC-N_CDAC; %R-DAC resolution
 

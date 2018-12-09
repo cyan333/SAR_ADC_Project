@@ -8,8 +8,8 @@
 
 clear;
 
-sigma_deltaC_C = 3.307294973963294e-04;
-sigma_deltaR_R = 4.639952116535146e-04;
+sigma_C = 0.001322917989585;
+sigma_R = 0.001841423909340;
 
 N_CDAC = 5;
 N_RDAC = 6;
@@ -33,11 +33,11 @@ for i=2:64
 end
 
 %% Generate C, R with mismatch 32 number of C and 64 number of R
-C = normrnd(Cu,Cu*sigma_deltaC_C,[1,(2^N_CDAC)]);
-% C = normrnd(1,sigma_deltaC_C,[1,(2^N_CDAC)]);
+C = normrnd(Cu,Cu*sigma_C,[1,(2^N_CDAC)]);
+% C = normrnd(1,sigma_C,[1,(2^N_CDAC)]);
 
-R = normrnd(Ru,Ru*sigma_deltaR_R,[1,(2^N_RDAC)]);
-% R = normrnd(1,sigma_deltaR_R,[1,(2^N_RDAC)]);
+R = normrnd(Ru,Ru*sigma_R,[1,(2^N_RDAC)]);
+% R = normrnd(1,sigma_R,[1,(2^N_RDAC)]);
 
 
 C_binary = C(1);

@@ -1,8 +1,8 @@
 function [INL,DNL] = getDNLINL()
 clear;
 
-sigma_deltaC_C = 9.279904233070289e-04;
-sigma_deltaR_R = 0.001841423909340;
+sigma_C = 0.001322917989585;
+sigma_R = 0.001841423909340;
 
 N_CDAC = 5;
 N_RDAC = 6;
@@ -17,21 +17,22 @@ Vin_neg = 1;
 %  D5 D4 D3 D2 D1
 % D = [0 0 0 0 1]; 
 D = dec2bin(0:(2^N_CDAC-1)) - '0';
+
 %% Switch for R DAC
 % thisSwitch = 1; %swich from 0 to 3 Vref0  = 0, Vref63 = 63/64Vref
 
 S = [zeros(1,63),1];
 
-for i=2:64
+for i=2:64   
     S(i,:) = [S(i-1, 2:64),0];
 end
 
 %% Generate C, R with mismatch 32 number of C and 64 number of R
-C = normrnd(1,sigma_deltaC_C,[1,(2^N_CDAC)]);
-% C = normrnd(1,sigma_deltaC_C,[1,(2^N_CDAC)]);
+C = normrnd(1,sigma_C,[1,(2^N_CDAC)]);
+% C = normrnd(1,sigma_C,[1,(2^N_CDAC)]);
 
-R = normrnd(1,sigma_deltaR_R,[1,(2^N_RDAC)]);
-% R = normrnd(1,sigma_deltaR_R,[1,(2^N_RDAC)]);
+R = normrnd(1,sigma_R,[1,(2^N_RDAC)]);
+% R = normrnd(1,sigma_R,[1,(2^N_RDAC)]);
 
 C_binary = C(1);
 N_b = 2;
