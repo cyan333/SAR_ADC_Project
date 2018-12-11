@@ -33,9 +33,9 @@ f = Fs*(0:(L/2))/L;
 SNR = snr(z,Fs)
 THD = thd(z,Fs,6)
 SNDR = sinad(z,Fs)
-DR = sfdr(z,Fs)
+
 figure(1)
-plot(f,P1) 
+plot(f*1e-3,P1) 
 title('Single-Sided Amplitude Spectrum of SAR Output')
 xlabel('freq (kHz)')
 ylabel('|P1(f)|')
@@ -50,7 +50,7 @@ figure(4)
 sinad(z,Fs);
 
 figure(5)
-sfdr(z,Fs);
+
 
 
 

@@ -1,13 +1,20 @@
 clear;
 
-sigma_deltaC_C = 9.279904233070289e-04;
-sigma_deltaR_R = 0.001841423909340;
+W = 0.13;
+L=0.065;
+Cp = W*L*6e-15
+
+N_CDAC = 5;
+N_RDAC = 6;
+
+sigma_C = 0.001322917989585;
+sigma_R = 0.001841423909340;
 
 N_CDAC = 5;
 N_RDAC = 6;
 N_DAC = N_CDAC+N_RDAC;
-Cu = 230e-15;
-Ru = 180;
+Cu = 57.5e-15;
+Ru = 200;
 
 Vref = 1;
 Vin_neg = 1;
@@ -26,11 +33,11 @@ for i=2:64
 end
 
 %% Generate C, R with mismatch 32 number of C and 64 number of R
-C = normrnd(1,sigma_deltaC_C,[1,(2^N_CDAC)]);
-% C = normrnd(1,sigma_deltaC_C,[1,(2^N_CDAC)]);
+C = normrnd(Cu,Cu*sigma_C,[1,(2^N_CDAC)]);
+% C = normrnd(1,sigma_C,[1,(2^N_CDAC)]);
 
-R = normrnd(1,sigma_deltaR_R,[1,(2^N_RDAC)]);
-% R = normrnd(1,sigma_deltaR_R,[1,(2^N_RDAC)]);
+R = normrnd(Ru,Ru*sigma_R,[1,(2^N_RDAC)]);
+% R = normrnd(1,sigma_R,[1,(2^N_RDAC)]);
 
 C_binary = C(1);
 N_b = 2;
@@ -67,16 +74,16 @@ D = kron(D,ones(2^N_RDAC,1));
 
 CD = C_array.*D;
 
-Vx_cap = (sum(CD,2)*Vref) ./ Ctotal;
+Vx_cap = (sum(CD,2)*Vref) ./ (Ctotal+Cp);
 
 %% Generate Resistor Voltage
 
 
-Vx_res = (Vref .* C0 .* sum(SR,2)) ./ (Rtotal .* Ctotal);
+Vx_res = (Vref .* C0 .* sum(SR,2)) ./ (Rtotal .* (Cp+Ctotal));
 % 
 % Vx = Vx_cap + Vx_res + Vin_neg;
 
-Vx = Vx_cap + Vx_res;
+Vx = Vx_cap + Vx_res + Vin_neg;
 
 
 step_avg = Vref/2^N_DAC;
@@ -98,23 +105,23 @@ end
 
 INL = (Vx-vout_ideal)./step_avg;
 
-% 
-% figure(1)
-% subplot(2,1,1);
-% plot(DNL,'DisplayName','DNL','LineWidth',2);
-% ylabel('DNL[LSB]','FontSize',12,'FontWeight','bold');
-% xlabel('Output Code','FontSize',12,'FontWeight','bold');
-% grid on
-% legend('show');
-% xlim([0,2^N_DAC]);
-% 
-% subplot(2,1,2);
-% plot(INL,'DisplayName','INL','LineWidth',2);
-% ylabel('INL[LSB]','FontSize',12,'FontWeight','bold');
-% xlabel('Output Code','FontSize',12,'FontWeight','bold');
-% grid on
-% legend('show');
-% xlim([0,2^N_DAC]);
+
+figure(1)
+subplot(2,1,1);
+plot(DNL,'DisplayName','DNL','LineWidth',2);
+ylabel('DNL[LSB]','FontSize',12,'FontWeight','bold');
+xlabel('Output Code','FontSize',12,'FontWeight','bold');
+grid on
+legend('show');
+xlim([0,2^N_DAC]);
+
+subplot(2,1,2);
+plot(INL,'DisplayName','INL','LineWidth',2);
+ylabel('INL[LSB]','FontSize',12,'FontWeight','bold');
+xlabel('Output Code','FontSize',12,'FontWeight','bold');
+grid on
+legend('show');
+xlim([0,2^N_DAC]);
 
 
 

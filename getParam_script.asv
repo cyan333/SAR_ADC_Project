@@ -10,7 +10,7 @@
 clear;
 Vref = 1;
 
-N_CDAC = 6; %C-DAC resolution
+N_CDAC = 1:11; %C-DAC resolution
 N_DAC = 12;
 N_RDAC = N_DAC-N_CDAC; %R-DAC resolution
 
@@ -70,7 +70,7 @@ Area_R = Res_num .* WL_R;
 sigma_C = (0.5.*2.*2.^(N_DAC-Linearity) .* LSB_N) ./ (sqrt(2) .* 3 .* sqrt(2.^(N_CDAC-1) - 1) .* LSB_C);
 
 % min cap value to satisfy 99.73% yeild
-Cu = 9 .* Ab_C^2 .* Kc .* (2.^(N_CDAC-1)-1) .* 2.^(2*N_DAC-2*N_CDAC);
+Cu = 9 .* Ab_C^2 .* Kc .* (2.^(N_CDAC-1)-1) .* 2.^(2*N_DAC-2*N_CDAC)
 Cu = Cu / 2^(2*N_DAC-2*Linearity);
 
 % Cu = 500e-15; 
@@ -88,41 +88,41 @@ Ctotal = Cu .* Cap_num;
 
 Rin = 2e-3./(fconv*Ctotal);
 
-% figure(1)
-% subplot(4,1,[1,2]);
-% hold off
-% plot(N_CDAC, Area_C.*1e12,'DisplayName','C AREA','LineWidth',2);
-% 
-% hold on
-% plot(N_CDAC, Area_R.*1e12,'DisplayName','R AREA','LineWidth',2);
-% 
-% ylabel('Area','FontSize',12,'FontWeight','bold');
-% xlabel('C DAC Bit','FontSize',12,'FontWeight','bold');
-% grid on
-% legend('show');
-% xlim([0,12]);
-% ylim([0,1600]);
-% 
-% subplot(4,1,3);
-% hold off
-% semilogy(N_CDAC, Iload,'DisplayName','Static Current','LineWidth',2);
-% ylabel('Static Current','FontSize',12,'FontWeight','bold');
-% xlabel('C DAC Bit','FontSize',12,'FontWeight','bold');
-% grid on
-% legend('show');
-% xlim([0,12]);
-% 
-% subplot(4,1,4);
-% hold off
-% plot(N_CDAC, Rin,'DisplayName','Rin','LineWidth',2);
-% xlim([0,12]);
-% ylim([400, 2500]);
-% 
-% ylabel('R_{in}','FontSize',12,'FontWeight','bold');
-% xlabel('C DAC Bit','FontSize',12,'FontWeight','bold');
-% grid on
-% legend('show');
-% xlim([1,12]);
+figure(1)
+subplot(4,1,[1,2]);
+hold off
+plot(N_CDAC, Area_C.*1e12,'DisplayName','C AREA','LineWidth',2);
+
+hold on
+plot(N_CDAC, Area_R.*1e12,'DisplayName','R AREA','LineWidth',2);
+
+ylabel('Area','FontSize',12,'FontWeight','bold');
+xlabel('C DAC Bit','FontSize',12,'FontWeight','bold');
+grid on
+legend('show');
+xlim([0,12]);
+ylim([0,1600]);
+
+subplot(4,1,3);
+hold off
+semilogy(N_CDAC, Iload,'DisplayName','Static Current','LineWidth',2);
+ylabel('Static Current','FontSize',12,'FontWeight','bold');
+xlabel('C DAC Bit','FontSize',12,'FontWeight','bold');
+grid on
+legend('show');
+xlim([0,12]);
+
+subplot(4,1,4);
+hold off
+plot(N_CDAC, Rin,'DisplayName','Rin','LineWidth',2);
+xlim([0,12]);
+ylim([400, 2500]);
+
+ylabel('R_{in}','FontSize',12,'FontWeight','bold');
+xlabel('C DAC Bit','FontSize',12,'FontWeight','bold');
+grid on
+legend('show');
+xlim([1,12]);
 
 
 %% System INL
