@@ -46,7 +46,6 @@ sigma_R = (0.5.*2.*2.^(N_DAC-Linearity) .* LSB_N ) ./ (sqrt(2).* 3.*sqrt(2.^(N_R
 
 Ru = 200; %ohm
 
-
 % Ru = Vref./(Iload * 2.^N_RDAC);
 
 Rtotal = Ru .* Res_num;
